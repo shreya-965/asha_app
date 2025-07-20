@@ -3,14 +3,15 @@ package com.example.asha_app;
 import android.Manifest;
 import android.bluetooth.*;
 import android.bluetooth.le.*;
+import android.media.MediaPlayer;
 import android.os.*;
 import android.widget.*;
 import android.content.Intent;
 import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-
 import java.util.*;
+
 
 public class MainActivity extends AppCompatActivity {
     private BluetoothLeScanner bleScanner;
@@ -29,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main); // ✅ Must be called before findViewById()
+
+        playGreetingAudios();
 
         tvStatus = findViewById(R.id.tvStatus);
         Button btnScan = findViewById(R.id.btnScanAndConnect);
@@ -60,6 +63,45 @@ public class MainActivity extends AppCompatActivity {
 
         requestPermissions();
     }
+
+    private void playGreetingAudios() {
+        List<Integer> audiosToPlay = new ArrayList<>();
+
+        Calendar calendar = Calendar.getInstance();
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+
+        if (hour < 12) {
+            audiosToPlay.add(R.raw.good_morning);
+        } else if (hour >= 12 && hour < 15) {
+            audiosToPlay.add(R.raw.good_afternoon);
+        } else {
+            audiosToPlay.add(R.raw.good_evening);
+        }
+
+        audiosToPlay.add(R.raw.my_name_is_dash);
+        audiosToPlay.add(R.raw.shall_we_learn_words_together);
+    }
+
+    private void playAudioSequence(List<Integer> audioList) {
+        if (audioList.isEmpty()) return;
+
+        MediaPlayer mp = MediaPlayer.create(this, audioList.get(0));
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            int index = 1;
+
+            @Override
+            public void onCompletion(MediaPlayer mediaPlayer) {
+                mediaPlayer.release();
+                if (index < audioList.size()) {
+                    MediaPlayer next = MediaPlayer.create(MainActivity.this, audioList.get(index++));
+                    next.setOnCompletionListener(this);
+                    next.start();
+                }
+            }
+        });
+        mp.start();
+    }
+
 
     @RequiresPermission(Manifest.permission.BLUETOOTH_SCAN)
     private void startScan() {

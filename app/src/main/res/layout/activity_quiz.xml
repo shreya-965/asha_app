@@ -31,14 +31,6 @@
             android:text="Previous" />
 
         <Button
-            android:id="@+id/btnSkip"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Skip"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp" />
-
-        <Button
             android:id="@+id/btnNext"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,13 +56,20 @@
             android:id="@+id/btnCorrect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Correct" />
+            android:background="@drawable/ic_correct" />
 
         <Button
             android:id="@+id/btnWrong"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Wrong"
+            android:background="@drawable/ic_wrong"
+            android:layout_marginStart="16dp" />
+
+        <Button
+            android:id="@+id/btnSlash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ic_slash"
             android:layout_marginStart="16dp" />
     </LinearLayout>
 
