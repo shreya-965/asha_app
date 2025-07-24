@@ -30,7 +30,7 @@ public class QuizActivity extends AppCompatActivity {
         findViewById(R.id.btnCorrect).setOnClickListener(v -> {
             playRandomFeedbackAudio(reinforcementAudios);
             showToast("Correct");
-            nextQuestion();
+            
         });
 
         findViewById(R.id.btnWrong).setOnClickListener(v -> {
