@@ -86,7 +86,7 @@ public class QuizActivity extends AppCompatActivity {
             String model = isGirl ? "this_is_a_girl" : "this_is_a_boy";
             String answer = "who_is_this";
 
-            List<String> choices = Arrays.asList(init, model);
+            List<String> choices = Arrays.asList(init, model, answer);
             Collections.shuffle(choices);
             playAudioByName(choices.get(0));
 
